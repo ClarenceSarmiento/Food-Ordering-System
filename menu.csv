@@ -1,11 +1,11 @@
-CODE,FLAVOR,SMALL,MEDIUM,LARGE
-CM1,Red Velvet,69,79,89
-CM2,Javaccine Chip,69,79,89
-CM3,Taropid test,69,79,89
-CM4,ABS Francheesecake,69,79,89
-CM5,Matchanita,69,79,89
-CM6,Cookies and Cream Chiu,69,79,89
-CM7,Ayudark Chocolate,69,79,89
-CM8,Sapted Caramel,69,79,89
-CM9,Okinawork-from-home,69,79,89
-CM10,Wintermelooyo,69,79,89
+CODE,FLAVOR,REG,MD,LRG
+CM1,Red Velvet,69.00,79.00,89.00
+CM2,Javaccine Chip,69.00,79.00,89.00
+CM3,Taropid Test,69.00,79.00,89.00
+CM4,ABS Francheesecake,69.00,79.00,89.00
+CM5,Matchanita,69.00,79.00,89.00
+CM6,Cookies and Cream Chiu,69.00,79.00,89.00
+CM7,Ayudark Chocolate,69.00,79.00,89.00
+CM8,Sapted Caramel,69.00,79.00,89.00
+CM9,Okinawork-from-home,69.00,79.00,89.00
+CM10,Wintermelooyo,69.00,79.00,89.00
