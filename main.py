@@ -1,9 +1,8 @@
 """
 Food Ordering System
 
-Menu
-Order
-Checkout
+Show Menu
+
 """
 
 from tabulate import tabulate
@@ -12,7 +11,6 @@ import sys
 
 
 def main():
-    global ordered
     options = [['SHOW', 'menu | order'], ['ORDERS', 'add | change | remove']]
     print(tabulate(options, headers=['FUNCTIONS', 'OPTIONS'], tablefmt='pretty'))
     while True:
@@ -65,9 +63,30 @@ def show_menu():
     print(tabulate(get_menu(), headers='keys', tablefmt='pretty'))
 
 
+def get_ordered():
+    ordered = []
+    try:
+        with open('order.csv') as orderedfile:
+            reader = csv.DictReader(orderedfile)
+            for row in reader:
+                ordered.append(row)
+        return ordered
+    except FileNotFoundError:
+        sys.exit('CSV file does not exist.')
+
+
 def show_order():
-    ...
-...
+    print(tabulate(get_ordered(), headers='keys', tablefmt='pretty'))
+
+
+def get_order(code: str, size: str, quantity: int):
+    sizes = ['REG', 'MD', 'LRG']
+    for item in get_menu():
+        if item['CODE'] == code and size in sizes:
+            flavor = item['FLAVOR']
+            price = float(item[size]) * int(quantity)
+            return {'QUANTITY': quantity, 'SIZE': size, 'FLAVOR': flavor, 'CODE': code, 'PRICE': item[size],
+                    'TOTAL PRICE': price}
 
 
 def add_order(order_list):
@@ -77,17 +96,6 @@ def add_order(order_list):
         writer.writeheader()
         for order in order_list:
             writer.writerow(order)
-
-
-#
-def get_order(code: str, size: str, quantity: int):
-    sizes = ['REG', 'MD', 'LRG']
-    for item in get_menu():
-        if item['CODE'] == code and size in sizes:
-            flavor = item['FLAVOR']
-            price = float(item[size]) * int(quantity)
-            return {'QUANTITY': quantity, 'SIZE': size, 'FLAVOR': flavor, 'CODE': code, 'PRICE': item[size],
-                 'TOTAL PRICE': price}
 
 
 if __name__ == "__main__":
