@@ -28,12 +28,12 @@ class FoodOrderSystem:
                 price = self.menu.at[code, size]
                 flavor = self.menu.at[code, "FLAVOR"]
                 order = {
-                    'CODE' : code,
-                    'SIZE' : size,
-                    'FLAVOR' : flavor,
-                    'QUANTITY' : quantity,
-                    'PRICE' : price,
-                    'TOTAL PRICE' : price * quantity
+                    'CODE': code,
+                    'SIZE': size,
+                    'FLAVOR': flavor,
+                    'QUANTITY': quantity,
+                    'PRICE': price,
+                    'TOTAL PRICE': price * quantity
                 }
                 for existing_order in self.orders:
                     if existing_order['CODE'] == code and existing_order['SIZE'] == size:
@@ -46,13 +46,24 @@ class FoodOrderSystem:
             else:
                 raise KeyError
         except KeyError:
-            print('Code not found. Order not added.')
+            print('Code/Size not found. Order not added.')
+
+    def change_order(self):
+        ...
+
+    ...
+
+    def remove_order(self):
+        ...
+
+    ...
 
     def show_orders(self):
         if len(self.orders) != 0:
             print(tabulate(self.orders, headers='keys', tablefmt='pretty'))
         else:
             print('No order added yet.')
+
 
 def main():
     menu = 'menu.csv'
@@ -69,22 +80,22 @@ def main():
     while True:
         try:
             code = int(input("Enter Code: "))
-            if code == 1:
+            if code == functions[0][0]:
                 food_ordering_system.show_menu()
-            elif code == 2:
+            elif code == functions[1][0]:
                 while True:
                     try:
                         code, size, quantity = input('Enter Order (CODE | SIZE | QUANTITY): ').upper().split(" ")
                         food_ordering_system.add_order(code, size, int(quantity))
                     except EOFError:
                         break
-            elif code == 3:
+            elif code == functions[2][0]:
                 ...
-            elif code == 4:
+            elif code == functions[3][0]:
                 ...
-            elif code == 5:
+            elif code == functions[4][0]:
                 food_ordering_system.show_orders()
-            elif code == 6:
+            elif code == functions[5][0]:
                 sys.exit('Thank you for Ordering!')
             else:
                 print('Code not found.')
