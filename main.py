@@ -2,100 +2,94 @@
 Food Ordering System
 
 Show Menu
+Add Order
+Change Order Quantity or Size
+Remove Order
+Show Orders
 
 """
 
 from tabulate import tabulate
-import csv
+import pandas as pd
 import sys
 
 
+class FoodOrderSystem:
+    def __init__(self, menu_file):
+        self.menu = pd.read_csv(menu_file, index_col='CODE')
+        self.orders = []
+
+    def show_menu(self):
+        print(tabulate(self.menu, headers='keys', tablefmt='pretty'))
+
+    def add_order(self, code: str, size: str, quantity: int):
+        try:
+            if code in self.menu.index:
+                price = self.menu.at[code, size]
+                flavor = self.menu.at[code, "FLAVOR"]
+                order = {
+                    'CODE' : code,
+                    'SIZE' : size,
+                    'FLAVOR' : flavor,
+                    'QUANTITY' : quantity,
+                    'PRICE' : price,
+                    'TOTAL PRICE' : price * quantity
+                }
+                for existing_order in self.orders:
+                    if existing_order['CODE'] == code and existing_order['SIZE'] == size:
+                        existing_order['QUANTITY'] += quantity
+                        existing_order['TOTAL PRICE'] += order['TOTAL PRICE']
+                        break
+                else:
+                    self.orders.append(order)
+                print('Order added successfully.')
+            else:
+                raise KeyError
+        except KeyError:
+            print('Code not found. Order not added.')
+
+    def show_orders(self):
+        if len(self.orders) != 0:
+            print(tabulate(self.orders, headers='keys', tablefmt='pretty'))
+        else:
+            print('No order added yet.')
+
 def main():
-    options = [['SHOW', 'menu | order'], ['ORDERS', 'add | change | remove']]
-    print(tabulate(options, headers=['FUNCTIONS', 'OPTIONS'], tablefmt='pretty'))
+    menu = 'menu.csv'
+    food_ordering_system = FoodOrderSystem(menu)
+    functions = [
+        [1, 'Show Menu'],
+        [2, 'Add Order'],
+        [3, 'Change Order'],
+        [4, 'Remove Order'],
+        [5, 'Show Order'],
+        [6, 'Exit']
+    ]
+    print(tabulate(functions, headers=['CODE', 'FUNCTION'], tablefmt='pretty'))
     while True:
         try:
-            function, option = input('Command: ').split(' ')
-            function = function.upper()
-            option = option.lower()
-            if function == 'SHOW':
-                if option == 'menu':
-                    show_menu()
-                elif option == 'order':
-                    show_order()
-                else:
-                    raise ValueError
-            elif function == 'ORDERS':
-                orders = []
-                if option == 'add':
-                    while True:
-                        try:
-                            code, size, quantity = input("Enter Code, Size, and Quantity: ").upper().split(" ")
-                            orders.append(get_order(code, size, int(quantity)))
-                        except EOFError:
-                            add_order(orders)
-                            break
-                elif option == 'change':
-                    ...
-                elif option == 'remove':
-                    ...
-                else:
-                    raise ValueError
+            code = int(input("Enter Code: "))
+            if code == 1:
+                food_ordering_system.show_menu()
+            elif code == 2:
+                while True:
+                    try:
+                        code, size, quantity = input('Enter Order (CODE | SIZE | QUANTITY): ').upper().split(" ")
+                        food_ordering_system.add_order(code, size, int(quantity))
+                    except EOFError:
+                        break
+            elif code == 3:
+                ...
+            elif code == 4:
+                ...
+            elif code == 5:
+                food_ordering_system.show_orders()
+            elif code == 6:
+                sys.exit('Thank you for Ordering!')
+            else:
+                print('Code not found.')
         except ValueError:
-            print('Wrong Commands, check your functions or options.')
-        except EOFError:
-            sys.exit()
-
-
-def get_menu():
-    menu = []
-    try:
-        with open('menu.csv') as menufile:
-            reader = csv.DictReader(menufile)
-            for row in reader:
-                menu.append(row)
-        return menu
-    except FileNotFoundError:
-        sys.exit('CSV file does not exist.')
-
-
-def show_menu():
-    print(tabulate(get_menu(), headers='keys', tablefmt='pretty'))
-
-
-def get_ordered():
-    ordered = []
-    try:
-        with open('order.csv') as orderedfile:
-            reader = csv.DictReader(orderedfile)
-            for row in reader:
-                ordered.append(row)
-        return ordered
-    except FileNotFoundError:
-        sys.exit('CSV file does not exist.')
-
-
-def show_order():
-    print(tabulate(get_ordered(), headers='keys', tablefmt='pretty'))
-
-
-def get_order(code: str, size: str, quantity: int):
-    sizes = ['REG', 'MD', 'LRG']
-    for item in get_menu():
-        if item['CODE'] == code and size in sizes:
-            flavor = item['FLAVOR']
-            price = float(item[size]) * int(quantity)
-            return {'QUANTITY': quantity, 'SIZE': size, 'FLAVOR': flavor, 'CODE': code, 'PRICE': item[size],
-                    'TOTAL PRICE': price}
-
-
-def add_order(order_list):
-    with open('order.csv', 'w', newline='') as orderfile:
-        fieldnames = ['QUANTITY', 'SIZE', 'FLAVOR', 'CODE', 'PRICE', 'TOTAL PRICE']
-        writer = csv.DictWriter(orderfile, fieldnames)
-        writer.writeheader()
-        for order in order_list:
-            writer.writerow(order)
+            sys.exit('Code is not a number.')
 
 
 if __name__ == "__main__":
