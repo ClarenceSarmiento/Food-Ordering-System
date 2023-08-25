@@ -18,6 +18,7 @@ class FoodOrderSystem:
     def __init__(self, menu_file):
         self.menu = pd.read_csv(menu_file, index_col='CODE')
         self.orders = []
+        self.total_price = 0
 
     def show_menu(self):
         print(tabulate(self.menu, headers='keys', tablefmt='pretty'))
@@ -86,6 +87,9 @@ class FoodOrderSystem:
     def show_orders(self):
         if len(self.orders) != 0:
             print(tabulate(self.orders, headers='keys', tablefmt='pretty'))
+            for order in self.orders:
+                self.total_price += order['TOTAL PRICE']
+            print(f"Total Price: {self.total_price}")
         else:
             print('No order added yet.')
 
