@@ -104,7 +104,7 @@ def main():
     print(tabulate(functions, headers=['CODE', 'FUNCTION'], tablefmt='pretty'))
     while True:
         try:
-            code = int(input("Enter Code: "))
+            code = int(input("Enter Function Code: "))
             if code == functions[0][0]:
                 food_ordering_system.show_menu()
             elif code == functions[1][0]:
@@ -118,7 +118,7 @@ def main():
                 print(tabulate((['Size'], ['Quantity']), headers=['TO CHANGE'], tablefmt='pretty'))
                 while True:
                     try:
-                        code, to_change = str(input('Enter Code and what to change (Size | Quantity): ')).upper().split(" ")
+                        code, to_change = str(input('Order Code and what to change (Size | Quantity): ')).upper().split(" ")
                         food_ordering_system.change_order(code, to_change)
                     except ValueError:
                         print('Code is not a number.')
@@ -126,7 +126,8 @@ def main():
                     except EOFError:
                         break
             elif code == functions[3][0]:
-                ...
+                code, size = input('Order Code and Size to remove: ').upper().split(" ")
+                food_ordering_system.remove_order(code, size)
             elif code == functions[4][0]:
                 food_ordering_system.show_orders()
             elif code == functions[5][0]:
