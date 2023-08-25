@@ -90,14 +90,9 @@ class FoodOrderSystem:
         else:
             print('No order added yet.')
 
-    def print_out(self, receipt_file):
-        receipt = pd.DataFrame([self.orders, self.total_price])
-        receipt.to_csv(receipt_file, index=False)
-
 
 def main():
     menu = 'menu.csv'
-    receipt = 'order.csv'
     food_ordering_system = FoodOrderSystem(menu)
     functions = [
         [1, 'Show Menu'],
@@ -140,7 +135,6 @@ def main():
             elif code == functions[4][0]:
                 food_ordering_system.show_orders()
             elif code == functions[5][0]:
-                food_ordering_system.print_out(receipt)
                 sys.exit('Thank you for Ordering!')
             else:
                 print('Code not found.')
