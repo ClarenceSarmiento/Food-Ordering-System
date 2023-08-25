@@ -48,27 +48,40 @@ class FoodOrderSystem:
         except KeyError:
             print('Code/Size not found. Order not added.')
 
-    def change_order(self, code, new_size='', new_quantity=0):  # Changes here is needed!!!
+    def change_order(self, code, to_change):  # Changes here is needed!!!
         for order in self.orders:
-            if order['CODE'] == code and order['SIZE'] != new_size:
-                new_price = self.menu.at[code, new_size]
-                order['SIZE'] = new_size
-                order['PRICE'] = new_price
-                order['TOTAL PRICE'] = new_price * order['QUANTITY']
-                print('Order Size changed successfully.')
+            try:
+                if order['CODE'] == code and to_change == 'SIZE':
+                    new_size = str(input('New size (REG/MD/LRG): ').upper())
+                    new_price = self.menu.at[code, new_size]
+                    order['SIZE'] = new_size
+                    order['PRICE'] = new_price
+                    order['TOTAL PRICE'] = new_price * order['QUANTITY']
+                    print('Order Size changed successfully.')
+                    break
+                elif order['CODE'] == code and to_change == 'QUANTITY':
+                    new_quantity = int(input('New Quantity: '))
+                    order['QUANTITY'] = new_quantity
+                    order["TOTAL PRICE"] = order['PRICE'] * new_quantity
+                    print('Order Quantity changed successfully.')
+                    break
+            except KeyError:
+                print('Invalid Size, must be (REG/MD/LRG).')
                 break
-            elif order['CODE'] == code and order['QUANTITY'] != new_quantity:
-                order['QUANTITY'] = new_quantity
-                order["TOTAL PRICE"] = order['PRICE'] * new_quantity
-                print('Order Quantity changed successfully.')
+            except ValueError:
+                print('Quantity is not a number.')
                 break
         else:
-            print('No order found.')
+            print('Order not found.')
 
-    def remove_order(self):
-        ...
-
-    ...
+    def remove_order(self, code, size):
+        for order in self.orders:
+            if order['CODE'] == code and order['SIZE'] == size:
+                self.orders.remove(order)
+                print('Order removed successfully.')
+                break
+        else:
+            print('Order not found.')
 
     def show_orders(self):
         if len(self.orders) != 0:
@@ -106,14 +119,7 @@ def main():
                 while True:
                     try:
                         code, to_change = str(input('Enter Code and what to change (Size | Quantity): ')).upper().split(" ")
-                        if to_change == "SIZE":
-                            new_size = str(input('New size (REG/MD/LRG): ').upper())
-                            food_ordering_system.change_order(code, new_size=new_size)
-                        elif to_change == 'QUANTITY':
-                            new_quantity = int(input('New Quantity: '))
-                            food_ordering_system.change_order(code, new_quantity=new_quantity)
-                        else:
-                            print('Invalid To Change Command.')
+                        food_ordering_system.change_order(code, to_change)
                     except ValueError:
                         print('Code is not a number.')
                         break
