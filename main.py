@@ -171,6 +171,9 @@ class FoodOrderSystem:
 
 
 def main():
+    """
+    Main function to interact with the food ordering system.
+    """
     menu = 'menu.csv'
     food_ordering_system = FoodOrderSystem(menu)
     functions = [
