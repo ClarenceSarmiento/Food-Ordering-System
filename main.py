@@ -1,12 +1,25 @@
 """
-Food Ordering System
+NAME
+    Food Ordering System
 
-Show Menu
-Add Order
-Change Order Quantity or Size
-Remove Order
-Show Orders
+DESCRIPTION
+    This program takes order from the user.
 
+FUNCTIONS
+    show_menu()
+        Prints the tabulated form of menu.
+
+    add_order(code: str, size: str, quantity: int)
+        Append the user's order to list of orders.
+
+    change_order(code: str, to_change: str)
+        Changes the user's specified order its size or quantity.
+
+    remove_order(code: str, size: str)
+        Removes the user's order based on its order code and size.
+
+    show_orders()
+        Prints the tabulated form of list of orders with its overall price.
 """
 
 from tabulate import tabulate
@@ -21,9 +34,26 @@ class FoodOrderSystem:
         self.total_price = 0
 
     def show_menu(self):
+        """
+        Shows the tabulated form of menu.
+        """
         print(tabulate(self.menu, headers='keys', tablefmt='pretty'))
 
     def add_order(self, code: str, size: str, quantity: int):
+        """
+        Add user's order to list of orders.
+
+        Args:
+            code (str): the string for order code to be added.
+            size (str): the string for order size (REG/MD/LRG).
+            quantity (int): the integer for order's quantity.
+
+        Raises:
+            KeyError: code or size not found.
+
+        Returns:
+            orders (list): code, size, flavor, quantity, price, total price
+        """
         if code in self.menu.index:
             price = self.menu.at[code, size]
             flavor = self.menu.at[code, "FLAVOR"]
@@ -46,7 +76,22 @@ class FoodOrderSystem:
             return
         raise KeyError
 
-    def change_order(self, code, to_change):  # Changes here is needed!!!
+    def change_order(self, code: str, to_change: str):
+        """
+        Changes the user's specified order its size or quantity.
+
+        Args:
+            code (str): the string for order code to be changed.
+            to_change (str): the string for order size or quantity to be changed.
+
+        Raises:
+            KeyError: Size must be str, not int. Cannot locate at menu file.
+            ValueError: Quantity must be int, not str.
+            ValueError: code is not found.
+
+        Returns:
+            orders (list): new size, new price, new quantity
+        """
         for order in self.orders:
             try:
                 if order['CODE'] == code and to_change == 'SIZE':
@@ -71,7 +116,14 @@ class FoodOrderSystem:
                 return
         raise ValueError
 
-    def remove_order(self, code, size):
+    def remove_order(self, code: str, size: str):
+        """
+        Removes the user's order based on its order code and size.
+
+        Args:
+            code (str): the string for order code to be removed.
+            size (str): the string for order size to be removed.
+        """
         for order in self.orders:
             if order['CODE'] == code and order['SIZE'] == size:
                 self.orders.remove(order)
@@ -82,6 +134,9 @@ class FoodOrderSystem:
             print('Order not found.')
 
     def show_orders(self):
+        """
+        Prints the tabulated form of list of orders with its overall price.
+        """
         if len(self.orders) != 0:
             print(tabulate(self.orders, headers='keys', tablefmt='pretty'))
             for order in self.orders:
