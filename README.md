@@ -32,22 +32,22 @@ Show Orders
 #### Download
 Download the Repository through Clone Repository or Download Zip
 ```
-$ git clone https://github.com/clarencesarmiento/Food-Ordering-System.git
+git clone https://github.com/clarencesarmiento/Food-Ordering-System.git
 ```
 After download, go to `cmd` and navigate to the folder directory.
 ```
-$ cd Food-Ordering-System
+cd Food-Ordering-System
 ```
 #### Installation
 Use [pip](https://pip.pypa.io/en/stable/) to install needed libraries inside
 the `requirements.txt`.
 ```
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 #### Usage
 Run the `main.py` using [python](https://www.python.org/).
 ```
-$ python main.py
+python main.py
 ```
 >[!NOTE]
 > The program is case-insensitive.
