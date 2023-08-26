@@ -99,8 +99,6 @@ class FoodOrderSystem:
             to_change (str): the string for order size or quantity to be changed.
 
         Raises:
-            KeyError: Size must be str, not int. Cannot locate at menu file.
-            ValueError: Quantity must be int, not str.
             ValueError: code is not found.
 
         Returns:
@@ -133,6 +131,8 @@ class FoodOrderSystem:
                                 print('Quantity must be a positive number.')
                         except ValueError:
                             print('Invalid Quantity, must be a number.')
+                    else:
+                        print("Please indicate what's to change, Size or Quantity.")
                     return
             raise ValueError
         else:
