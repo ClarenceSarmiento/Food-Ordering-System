@@ -63,7 +63,7 @@ class FoodOrderSystem:
             quantity (int): the integer for order's quantity.
 
         Raises:
-            KeyError: code or size not found.
+            ValueError: Invalid Input
 
         Returns:
             orders (dict): code, size, flavor, quantity, price, total price
