@@ -34,11 +34,11 @@ Download the Repository through Clone Repository or Download Zip
 ```
 git clone https://github.com/clarencesarmiento/Food-Ordering-System.git
 ```
+#### Installation
 After download, go to `cmd` and navigate to the folder directory.
 ```
 cd Food-Ordering-System
 ```
-#### Installation
 Use [pip](https://pip.pypa.io/en/stable/) to install needed libraries inside
 the `requirements.txt`.
 ```
