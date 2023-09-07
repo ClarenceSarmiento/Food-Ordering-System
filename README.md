@@ -1,4 +1,4 @@
-# Food Ordering System
+# Food Ordering System 🥡
 ### DESCRIPTION:
 A food ordering system that has the following functions:
 - Show Menu
