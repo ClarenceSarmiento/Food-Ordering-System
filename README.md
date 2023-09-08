@@ -51,6 +51,6 @@ python main.py
 ```
 >[!NOTE]
 > The program is case-insensitive.
-### REFERENCES
+### REFERENCES:
 [^1]: [Pandas](https://pandas.pydata.org/docs/index.html)
 [^2]: [Tabulate](https://pypi.org/project/tabulate/)
